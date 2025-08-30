@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple Music Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'apple-red': '#FF3B30',
+                        'apple-orange': '#FF9500',
+                        'apple-yellow': '#FFCC00',
+                        'apple-green': '#34C759',
+                        'apple-teal': '#5AC8FA',
+                        'apple-blue': '#007AFF',
+                        'apple-purple': '#AF52DE',
+                        'apple-pink': '#FF2D92',
+                        'apple-gray': {
+                            50: '#F2F2F7',
+                            100: '#E5E5EA',
+                            200: '#D1D1D6',
+                            300: '#C7C7CC',
+                            400: '#AEAEB2',
+                            500: '#8E8E93',
+                            600: '#636366',
+                            700: '#48484A',
+                            800: '#3A3A3C',
+                            900: '#1C1C1E',
+                        }
+                    },
+                    fontFamily: {
+                        'sf': ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .apple-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .music-card {
+            @apply bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer;
+        }
+        .music-card:hover {
+            @apply transform scale-105;
+        }
+        .play-button {
+            @apply bg-apple-red text-white rounded-full p-3 hover:bg-apple-red/90 transition-all duration-200;
+        }
+        .progress-bar {
+            @apply w-full bg-apple-gray-200 rounded-full h-1;
+        }
+        .volume-slider {
+            @apply w-20 h-1 bg-apple-gray-300 rounded-full appearance-none cursor-pointer;
+        }
+        .volume-slider::-webkit-slider-thumb {
+            @apply appearance-none w-3 h-3 bg-apple-red rounded-full cursor-pointer;
+        }
+    </style>
+</head>
+<body class="bg-apple-gray-50 font-sf">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white border-r border-apple-gray-200 flex flex-col">
+            <div class="p-4 border-b border-apple-gray-200">
+                <h1 class="text-xl font-bold text-apple-gray-900">Apple Music</h1>
+            </div>
+            <div class="flex-1 p-4 space-y-6">
+                <div class="space-y-2">
+                    <button class="flex items-center gap-3 px-4 py-3 rounded-lg bg-apple-gray-200 text-apple-blue w-full">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                        <span>Home</span>
+                    </button>
+                    <button class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-apple-gray-100 transition-colors w-full">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <span>Search</span>
+                    </button>
+                    <button class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-apple-gray-100 transition-colors w-full">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                        <span>Your Library</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col">
+            <!-- Header -->
+            <header class="bg-white border-b border-apple-gray-200 px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-apple-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <input type="text" placeholder="Search for Artists, Songs, or Albums" class="pl-10 pr-4 py-2 w-80 bg-apple-gray-100 rounded-full border-none focus:outline-none focus:ring-2 focus:ring-apple-blue focus:bg-white transition-all">
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button class="p-2 rounded-lg hover:bg-apple-gray-100 transition-colors relative">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4.19 4.19A2 2 0 004 6v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2h12"></path>
+                        </svg>
+                        <span class="absolute -top-1 -right-1 w-3 h-3 bg-apple-red rounded-full"></span>
+                    </button>
+                    <button class="flex items-center gap-2 p-2 rounded-lg hover:bg-apple-gray-100 transition-colors">
+                        <div class="w-8 h-8 bg-gradient-to-br from-apple-purple to-apple-pink rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
+                        <span class="text-sm font-medium text-apple-gray-900">John Doe</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto p-6">
+                <div class="space-y-8">
+                    <!-- Hero Section -->
+                    <div class="relative h-64 rounded-2xl overflow-hidden">
+                        <div class="absolute inset-0 apple-gradient"></div>
+                        <div class="absolute inset-0 bg-black/20"></div>
+                        <div class="relative h-full flex items-center justify-center text-white">
+                            <div class="text-center">
+                                <h1 class="text-4xl font-bold mb-2">Welcome to Apple Music</h1>
+                                <p class="text-lg opacity-90">Discover millions of songs and create your perfect playlist</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recently Played -->
+                    <div class="space-y-4">
+                        <h2 class="text-2xl font-bold text-apple-gray-900">Recently Played</h2>
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                            <!-- Music Cards -->
+                            <div class="music-card group relative overflow-hidden">
+                                <div class="relative aspect-square overflow-hidden rounded-lg">
+                                    <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop" alt="Album Cover" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <button class="play-button">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="p-3">
+                                    <h3 class="font-semibold text-apple-gray-900 text-sm mb-1">Blinding Lights</h3>
+                                    <p class="text-apple-gray-600 text-xs mb-2">The Weeknd</p>
+                                    <p class="text-apple-gray-500 text-xs">After Hours</p>
+                                </div>
+                            </div>
+
+                            <div class="music-card group relative overflow-hidden">
+                                <div class="relative aspect-square overflow-hidden rounded-lg">
+                                    <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&h=400&fit=crop" alt="Album Cover" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <button class="play-button">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="p-3">
+                                    <h3 class="font-semibold text-apple-gray-900 text-sm mb-1">Shape of You</h3>
+                                    <p class="text-apple-gray-600 text-xs mb-2">Ed Sheeran</p>
+                                    <p class="text-apple-gray-500 text-xs">÷ (Divide)</p>
+                                </div>
+                            </div>
+
+                            <div class="music-card group relative overflow-hidden">
+                                <div class="relative aspect-square overflow-hidden rounded-lg">
+                                    <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=400&fit=crop" alt="Album Cover" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <button class="play-button">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="p-3">
+                                    <h3 class="font-semibold text-apple-gray-900 text-sm mb-1">Dance Monkey</h3>
+                                    <p class="text-apple-gray-600 text-xs mb-2">Tones and I</p>
+                                    <p class="text-apple-gray-500 text-xs">The Kids Are Coming</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Player -->
+            <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-apple-gray-200 px-6 py-4">
+                <div class="flex items-center justify-between max-w-7xl mx-auto">
+                    <div class="flex items-center gap-4 flex-1">
+                        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop" alt="Current Track" class="w-12 h-12 rounded-lg object-cover">
+                        <div class="min-w-0">
+                            <h4 class="font-medium text-apple-gray-900 truncate">Blinding Lights</h4>
+                            <p class="text-sm text-apple-gray-600 truncate">The Weeknd</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-center gap-2 flex-1">
+                        <div class="flex items-center gap-4">
+                            <button class="p-2 text-apple-gray-600 hover:text-apple-gray-900 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                                </svg>
+                            </button>
+                            <button class="p-2 text-apple-gray-600 hover:text-apple-gray-900 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </button>
+                            <button class="w-10 h-10 bg-apple-red text-white rounded-full flex items-center justify-center hover:bg-apple-red/90 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </button>
+                            <button class="p-2 text-apple-gray-600 hover:text-apple-gray-900 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                            <button class="p-2 text-apple-gray-600 hover:text-apple-gray-900 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="flex items-center gap-3 w-full max-w-md">
+                            <span class="text-xs text-apple-gray-500 w-10">0:00</span>
+                            <div class="flex-1 relative">
+                                <input type="range" min="0" max="100" value="0" class="progress-bar appearance-none cursor-pointer">
+                            </div>
+                            <span class="text-xs text-apple-gray-500 w-10">3:20</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4 flex-1 justify-end">
+                        <div class="flex items-center gap-2">
+                            <button class="p-2 text-apple-gray-600 hover:text-apple-gray-900 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+                                </svg>
+                            </button>
+                            <input type="range" min="0" max="1" step="0.01" value="0.7" class="volume-slider">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple JavaScript for interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Play button functionality
+            const playButtons = document.querySelectorAll('.play-button');
+            playButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    console.log('Play button clicked!');
+                });
+            });
+
+            // Music card hover effects
+            const musicCards = document.querySelectorAll('.music-card');
+            musicCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+
+            // Progress bar functionality
+            const progressBar = document.querySelector('.progress-bar');
+            if (progressBar) {
+                progressBar.addEventListener('input', function() {
+                    console.log('Progress:', this.value + '%');
+                });
+            }
+
+            // Volume slider functionality
+            const volumeSlider = document.querySelector('.volume-slider');
+            if (volumeSlider) {
+                volumeSlider.addEventListener('input', function() {
+                    console.log('Volume:', this.value);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
