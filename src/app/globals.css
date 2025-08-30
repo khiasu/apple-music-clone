@@ -3,10 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  * {
-    @apply border-apple-gray-200;
-  }
-  
   body {
     @apply bg-apple-gray-50 text-apple-gray-900 font-sf;
     font-feature-settings: "rlig" 1, "calt" 1;
