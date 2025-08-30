@@ -226,5 +226,3 @@ If you have any questions or need help:
 - Review the code comments
 
 ---
-
-**Built with ❤️ for your internship portfolio**
