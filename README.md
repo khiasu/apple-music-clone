@@ -47,7 +47,6 @@ src/
 └── lib/                # Utility functions
     └── utils.ts        # Helper functions and utilities
 ```
-
-## 🚀 Free Deployment done to Vercel!
+🚀 Free Deployment done to Vercel!
 
 
